@@ -4,10 +4,10 @@
 #include <tuple>
 
 /* implements forwards and backwards induction on a lattice */
-const int laticeNomial = 2;//binomial
+const int laticeNomial_array = 2;//binomial
 
 template<typename T>
-void forwardInduction(T rootVal, Lattice<T, laticeNomial>& lattice, 
+void forwardInduction(T rootVal, Lattice<T, laticeNomial_array>& lattice, 
 					const std::function<std::tuple<T, T>(T)>& gen)
 {
 	lattice[0][0] = rootVal;
@@ -19,7 +19,7 @@ void forwardInduction(T rootVal, Lattice<T, laticeNomial>& lattice,
 }
 
 template<typename T>
-T backwardsInduction(Lattice<T, laticeNomial>& lattice, 
+T backwardsInduction(Lattice<T, laticeNomial_array>& lattice, 
 					const std::function<T(std::tuple<T, T>, T)>& backGen,
 					const std::function<T(T)>& leafGen,
 					const std::function<T(T,T)>& adjust)
