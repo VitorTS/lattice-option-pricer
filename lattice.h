@@ -3,6 +3,10 @@
 #ifndef LATTICE_H
 #define LATTICE_H
 
+#include <vector>
+#include <tuple>
+#include <iostream>
+
 template<typename Node, int nomial>
 class Lattice{
 	static_assert((nomial != 2 || nomial != 3), "Lattice type can only be binomial (2) or trinomial (3)");

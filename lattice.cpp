@@ -1,7 +1,3 @@
-#include <vector>
-#include <tuple>
-#include <iostream>
-
 template<typename Node, int nomial>
 Lattice<Node, nomial>::Lattice(const int N): tree(N)
 {
