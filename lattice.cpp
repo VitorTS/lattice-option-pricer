@@ -5,39 +5,17 @@ Lattice<Node, nomial>::Lattice(const int N): tree(N)
 		tree[i] = std::vector<Node>(i + 1);
 	}
 };
-	
-template<typename Node, int nomial>
-std::vector<Node>& Lattice<Node, nomial>::operator [] (const int i){
-	return tree[i];
-};
+
 
 template<typename Node, int nomial>
-typename Lattice<Node, nomial>::iterator Lattice<Node, nomial>::begin() const{
-	return tree.begin();
-};
-
-template<typename Node, int nomial>
-typename Lattice<Node, nomial>::iterator Lattice<Node, nomial>::end() const{
-	return tree.end();
-};
-
-template<typename Node, int nomial>
-std::size_t Lattice<Node, nomial>::size() const{
-	return tree.size();
-};
-
-template<typename Node, int nomial>
-std::size_t Lattice<Node, nomial>::maxIndex() const{
-	return tree.size() - 1;
-};
-
-template<typename Node, int nomial>
-std::ostream& operator << (std::ostream& os, const Lattice<Node, nomial>& lattice){
-	for(auto& v : lattice){
-		os << '\n';
-		for(auto& n : v){
-			os << n << ", ";
+std::ostream& operator << (std::ostream& os, Lattice<Node, nomial>& lattice){
+	for(int i = 0; i < lattice.size1(); i++){
+		os << '[';
+		for(int j = 0; j <= i; j++){
+			os << lattice(i, j);
+			if(j != i) os << ", ";
 		}
+		os << ']';
 	}
 	return os;
 };

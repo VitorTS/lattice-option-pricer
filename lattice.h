@@ -1,5 +1,3 @@
-/* STL friendly Lattice ADT */
-
 #ifndef LATTICE_H
 #define LATTICE_H
 
@@ -15,18 +13,21 @@ private:
 public:
 	Lattice(const int N);
 	
-	std::vector<Node>& operator [] (const int i);
+	int size1() const{
+		return tree.size();
+	};
 	
-	using iterator = typename std::vector<std::vector<Node>>::const_iterator;
+	int size2() const{
+		return tree.end().size();
+	};
 	
-	iterator begin() const;
+	int maxIndex() const{
+		return tree.size() - 1;
+	};
 	
-	iterator end() const;
-	
-	std::size_t size() const;
-	
-	std::size_t maxIndex() const;
-	
+	Node& operator() (int m, int n){
+		return tree[m][n];
+	}
 };
 
 #include "lattice.cpp"
