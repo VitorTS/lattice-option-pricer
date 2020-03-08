@@ -1,11 +1,4 @@
-template<typename Node, int nomial>
-Lattice<Node, nomial>::Lattice(const int N): tree(N)
-{
-	for(size_t i = 0; i < N; i++){
-		tree[i] = std::vector<Node>(i + 1);
-	}
-};
-
+#include <iostream>
 
 template<typename Node, int nomial>
 std::ostream& operator << (std::ostream& os, Lattice<Node, nomial>& lattice){

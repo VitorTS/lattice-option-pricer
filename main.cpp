@@ -2,17 +2,12 @@
 #include <algorithm>
 #include <iostream>
 #include "lattice.h"
+#include "option_type.h"
 #include "induction.h"
 #include "inductionAlgorithms.h"
-#include "induction_array.h"
-#include "inductionAlgorithms_array.h"
-#include "benchmark.h"
 
 int main()
 {
-	Benchmark<> bench{};
-	bench.start();
-	
 	OptionData option;
 	option.K = 100.0;
 	option.S = 100.0;
@@ -23,6 +18,7 @@ int main()
 	option.H = 95;
 	option.N = 3;
 	
+	
 	auto plainOptionPrice = [&option](double assetPrice){
 		return std::max(option.K - assetPrice, 0.0);
 	};
@@ -31,36 +27,24 @@ int main()
 		return std::max(plainOptionPrice(assetPrice), optionPrice);
 	};
 	
-	double benchResult;
-	
-	for(int i = 0; i < 1'000'000; i++){
-		TRGLatticeInductor algorithm(option);
-		Lattice<double, 2> lattice{option.N};
-		
-		forwardInduction<double>(option.S, lattice, algorithm);
-		
-		//std::cout << "Asset lattice:" << lattice << std::endl;
-		
-		double optionPrice = backwardsInduction<double>(lattice, algorithm, plainOptionPrice, earlyExercise);
+	TRGLatticeInductor algorithm(option);
 
-		//std::cout << "Option price:" << optionPrice << std::endl;
+	Lattice<double, 2> lattice{option.N};
+	
+	for(long i = 0; i < lattice.size1(); i++){
+		std::cout << i << '\n';
 	}
 	
-	benchResult = bench.stop();
-	std::cout << "Pricing took " << benchResult << " milliseconds" << '\n';
-	
-	
-	bench.start();
-	
-	for(int i = 0; i < 1'000'000; i++){
-		TRGLatticeInductor_array algorithm(option);
-		Lattice<double, 2> lattice{option.N};
-		
-		forwardInduction_array<double>(option.S, lattice, algorithm);
-		double optionPrice = backwardsInduction_array<double>(lattice, algorithm, plainOptionPrice, earlyExercise);
+	for(long i = lattice.maxIndex() - 1; i >= 0; i--){
+		for(long j = 0; j <= i; j++){
+			std::cout << i << ' ' << j << '\n';
+		}
 	}
-	benchResult = bench.stop();
-	std::cout << "Pricing took " << benchResult << " milliseconds" << '\n';
+	forwardInduction<double>(option.S, lattice, algorithm);
+	double optionPrice = backwardsInduction<double>(lattice, algorithm, plainOptionPrice, earlyExercise);
 	
+	std::cout << lattice << '\n';
+	
+	std::cout << "option price is " << optionPrice << '\n';
 	return 0;
 }

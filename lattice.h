@@ -1,32 +1,31 @@
 #ifndef LATTICE_H
 #define LATTICE_H
 
-#include <vector>
-#include <tuple>
-#include <iostream>
+#include <boost/numeric/ublas/triangular.hpp>
+namespace ublas = boost::numeric::ublas;
 
 template<typename Node, int nomial>
 class Lattice{
 	static_assert((nomial != 2 || nomial != 3), "Lattice type can only be binomial (2) or trinomial (3)");
 private:
-	std::vector<std::vector<Node>> tree;
+	ublas::triangular_matrix<Node, ublas::lower> tree;
 public:
-	Lattice(const int N);
+	Lattice(const int N): tree(N, N) {};
 	
-	int size1() const{
-		return tree.size();
+	Node& operator() (const Node m, const Node n){
+		return tree(m, n);
 	};
 	
-	int size2() const{
-		return tree.end().size();
-	};
+	std::size_t size1() const{
+		return tree.size1();
+	}
+	
+	std::size_t size2() const{
+		return tree.size2();
+	}
 	
 	int maxIndex() const{
-		return tree.size() - 1;
-	};
-	
-	Node& operator() (int m, int n){
-		return tree[m][n];
+		return tree.size2() - 1;
 	}
 };
 
