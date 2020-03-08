@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <iostream>
 #include "../lattice.h"
-#include "../induction.h"
-#include "../inductionAlgorithms.h"
+#include "induction_tuple.h"
+#include "inductionAlgorithms_tuple.h"
 #include "induction_array.h"
 #include "inductionAlgorithms_array.h"
 #include "../benchmark.h"
