@@ -1,7 +1,7 @@
 #include<cmath>
-#include <algorithm>
-#include <functional>
-#include<tuple>
+#include<algorithm>
+#include<functional>
+#include<array>
 #include "option_type.h"
 
 /* function object with lattice algorithms */
@@ -31,12 +31,12 @@ public:
 	};
 	
 	//forwards
-	std::tuple<double, double> operator() (double assetPrice){
-		return std::make_tuple<double, double>(assetPrice  * u, assetPrice  * d);
+	std::array<double, 2> operator() (double assetPrice){
+		return std::array<double, 2>{assetPrice * u, assetPrice * d};
 	};
 	
 	//backwards
-	double operator() (std::tuple<double, double> upDown, double assetPrice){
-		return std::get<0>(upDown) * pudisc + std::get<1>(upDown) * pddisc;
+	double operator() (std::array<double, 2> upDown, double assetPrice){
+		return upDown[0] * pudisc + upDown[1] * pddisc;
 	};
 };
